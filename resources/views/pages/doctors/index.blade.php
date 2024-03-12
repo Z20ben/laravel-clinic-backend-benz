@@ -70,7 +70,8 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Specialist</th>
-                                            <th>Created At</th>
+                                            <th>Photo</th>
+                                            {{-- <th>Created At</th> --}}
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($doctors as $doctor)
@@ -87,7 +88,9 @@
                                                 <td>
                                                     {{ $doctor->doctor_specialist }}
                                                 </td>
-                                                <td>{{ $doctor->created_at }}</td>
+                                                <td><img src={{ Illuminate\Support\Str::startsWith($doctor->photo, 'https://') ? $doctor->photo : (Illuminate\Support\Str::startsWith($doctor->photo, '/storage/') ? $doctor->photo : '/images/' . $doctor->photo) }}
+                                                    width="100px"></td>
+                                                {{-- <td>{{ $doctor->created_at }}</td> --}}
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('doctors.edit', $doctor->id) }}'

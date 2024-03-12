@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,24 +26,45 @@ class DoctorController extends Controller
 
     // store
     public function store(Request $request){
+        try{
+            $request->validate([
+                'doctor_name' => 'required',
+                'doctor_email'=> 'required|email',
+                'doctor_phone'=> 'required',
+                'doctor_specialist'=> 'required',
+                'photo' => 'image|mimes:jpeg,png,jpg,gif,svg',
+                'sip'=> 'required',
+            ]);
 
-        $request->validate([
-            'doctor_name' => 'required',
-            'doctor_email'=> 'required|email',
-            'doctor_phone'=> 'required',
-            'doctor_specialist'=> 'required',
-            'sip'=> 'required',
-        ]);
+            $doctor = new Doctor();
+            $doctor->doctor_name = $request->doctor_name;
+            $doctor->doctor_specialist = $request->doctor_specialist;
+            $doctor->doctor_phone = $request->doctor_phone;
+            $doctor->doctor_email = $request->doctor_email;
+            if ($request->photo != null) {
+                $filename = time() . $request->file('photo')->getClientOriginalName();
+                $path = $request->file('photo')->storeAs('images', $filename, 'public');
+                $doctor->photo = '/storage/' . $path;
+            } else {
+                $doctor->photo = ""; // Atau apa pun yang Anda inginkan ketika tidak ada foto
+            }
+            $doctor->sip = $request->sip;
+            $doctor->save();
 
-        DB::table('doctors')->insert([
-            'doctor_name' => $request->doctor_name,
-            'doctor_specialist' => $request->doctor_specialist,
-            'doctor_phone' => $request->doctor_phone,
-            'doctor_email' => $request->doctor_email,
-            'sip' => $request->sip,
-        ]);
+            // DB::table('doctors')->insert([
+            //     'doctor_name' => $request->doctor_name,
+            //     'doctor_specialist' => $request->doctor_specialist,
+            //     'doctor_phone' => $request->doctor_phone,
+            //     'doctor_email' => $request->doctor_email,
+            //     'sip' => $request->sip,
+            // ]);
 
-        return redirect()->route('doctors.index')->with('success','Doctor create successfully.');
+            return redirect()->route('doctors.index')->with('success','Doctor create successfully.');
+        }catch (\Throwable $th) {
+            // Log or handle the exception here
+            return redirect()->back()->with('error', 'Failed to create doctor: ' . $th->getMessage());
+        }
+
     }
      // show
      public function show($id){
@@ -52,7 +74,8 @@ class DoctorController extends Controller
 
     // edit
     public function edit($id){
-        $doctor = DB::table('doctors')->where('id',$id)->first();
+        // $doctor = DB::table('doctors')->where('id',$id)->first();
+        $doctor = Doctor::find($id);
         return view('pages.doctors.edit', compact('doctor'));
     }
 
@@ -60,20 +83,28 @@ class DoctorController extends Controller
     public function update(Request $request, $id){
 
         $request->validate([
-            'doctor_name' => $request->doctor_name,
-            'doctor_specialist' => $request->doctor_specialist,
-            'doctor_phone' => $request->doctor_phone,
-            'doctor_email' => $request->doctor_email,
-            'sip' => $request->sip,
+            'doctor_name' => 'required',
+            'doctor_specialist' => 'required',
+            'doctor_phone' => 'required',
+            'doctor_email' => 'required|email',
+            'sip' => 'required',
         ]);
 
-        DB::table('doctors')->where('id',$id)->update([
-            'doctor_name' => $request->doctor_name,
-            'doctor_specialist' => $request->doctor_specialist,
-            'doctor_phone' => $request->doctor_phone,
-            'doctor_email' => $request->doctor_email,
-            'sip' => $request->sip,
-        ]);
+        $doctor = Doctor::find($id);
+        $doctor->doctor_name = $request->doctor_name;
+        $doctor->doctor_specialist = $request->doctor_specialist;
+        $doctor->doctor_phone = $request->doctor_phone;
+        $doctor->doctor_email = $request->doctor_email;
+        $doctor->sip = $request->sip;
+        $doctor->save();
+
+        // DB::table('doctors')->where('id',$id)->update([
+        //     'doctor_name' => $request->doctor_name,
+        //     'doctor_specialist' => $request->doctor_specialist,
+        //     'doctor_phone' => $request->doctor_phone,
+        //     'doctor_email' => $request->doctor_email,
+        //     'sip' => $request->sip,
+        // ]);
         return redirect()->route('doctors.index')->with('success','Doctor updated successfully.');
     }
 
