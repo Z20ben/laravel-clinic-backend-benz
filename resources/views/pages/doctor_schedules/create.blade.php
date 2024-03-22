@@ -30,7 +30,7 @@
 
 
                 <div class="card">
-                    <form action="{{ route('doctors.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('doctor-schedules.store') }}" method="POST">
                         @csrf
                         <div class="card-header">
                             <h4>Input Text</h4>
@@ -38,96 +38,78 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Doctor Name</label>
-                                <input type="text"
-                                    class="form-control @error('doctor_name')
-                                is-invalid
-                            @enderror"
-                                    name="doctor_name">
-                                @error('doctor_name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <select class="form-control selectric @error('doctor_id') is-invalid @enderror"
+                                    name="doctor_id">
+                                    <option value="">Select Doctor</option>
+                                    @foreach ($doctors as $doctor)
+                                        <option value="{{ $doctor->id}} "> {{$doctor->doctor_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label>Doctor Specialist</label>
+                                <label>Jadwal Senin</label>
                                 <input type="text"
-                                    class="form-control @error('doctor_specialist')
-                                is-invalid
-                            @enderror"
-                                    name="doctor_specialist">
-                                @error('doctor_specialist')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                    class="form-control "
+                                    name="senin">
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
-                                <input type="number" class="form-control" name="doctor_phone">
+                                <label>Jadwal Selasa</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="selasa">
                             </div>
+                            <div class="form-group">
+                                <label>Jadwal Rabu</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="rabu">
+                            </div>
+                            <div class="form-group">
+                                <label>Jadwal Kamis</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="kamis">
+                            </div>
+                            <div class="form-group">
+                                <label>Jadwal Jumat</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="jumat">
+                            </div>
+                            <div class="form-group">
+                                <label>Jadwal Sabtu</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="sabtu">
+                            </div>
+                            <div class="form-group">
+                                <label>Jadwal Minggu</label>
+                                <input type="text"
+                                    class="form-control "
+                                    name="minggu">
+                            </div>
+                            {{-- status --}}
+                            {{-- <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="active" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Active</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="status" value="inactive" class="selectgroup-input">
+                                        <span class="selectgroup-button">Inactive</span>
+                                    </label>
+                                </div>
+                            </div> --}}
+                            {{-- Note --}}
+                            {{-- <div class="form-group mb-0">
+                                <label>Note</label>
+                                <textarea class="form-control" name="note"></textarea>
+                            </div> --}}
 
-                            <div class="form-group">
-                                <label>Doctor Email</label>
-                                <input type="email"
-                                    class="form-control @error('doctor_email')
-                                is-invalid
-                            @enderror"
-                                    name="doctor_email">
-                                @error('doctor_email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Photo</label>
-                                <input type="file" name="photo" class="form-control" placeholder="Doctor Photo">
-                            </div>
-                            <div class="form-group">
-                                <label>Address</label>
-                                <textarea type="text"
-                                    class="form-control @error('address')
-                                is-invalid
-                            @enderror"
-                                    name="address"></textarea>
-                                @error('address')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
-                            <div class="form-group">
-                                <label>S.I.P</label>
-                                <input type="number" class="form-control" name="sip">
-                            </div>
-                            <div class="form-group">
-                                <label>ID IHS</label>
-                                <input type="text"
-                                    class="form-control @error('id_ihs')
-                                is-invalid
-                            @enderror"
-                                    name="id_ihs">
-                                @error('id_ihs')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>NIK</label>
-                                <input type="text"
-                                    class="form-control @error('nik')
-                                is-invalid
-                            @enderror"
-                                    name="nik">
-                                @error('nik')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
                             {{-- <div class="form-group">
                                 <label>Password</label>

@@ -36,15 +36,22 @@
                             <span>Doctors</span>
                             </a>
                     </li>
-                    <li class=''{{ Request::is('doctor-schedules.index') ? 'active' : '' }}''>
+                    {{-- <li class=''{{ Request::is('doctor-schedules.index') ? 'active' : '' }}''>
                         <a class="nav-link"
                             href="{{ route('doctor-schedules.index') }}">
                             <i class="fa-solid fa-stethoscope"></i>
                             <span>Doctors Schedule</span>
                             </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
+            <li class=''>
+                <a class="nav-link" href="{{ route('doctor-schedules.index') }}"><i class="fas fa-fire"></i>Doctor Schedules</a>
+            </li>
+            <li class=''>
+                <a class="nav-link" href="{{ route('patients.index') }}"><i class="fas fa-fire"></i>Patients</a>
+            </li>
+
         </ul>
 
     </aside>
