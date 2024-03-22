@@ -1,10 +1,12 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Benz Klinik</a>
+            <a href="index.html">
+                <i class="fa-solid fa-house-chimney-medical"></i>
+                Medical Klinik</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
+            <a href="index.html">Mk</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Master Data</li>
@@ -18,15 +20,28 @@
                     </li>
                 </ul> --}}
                 <ul class="dropdown-menu">
-                    <li class=''>
-                        <a class="nav-link"
-                            href="{{ route('users.index') }}">Users</a>
-                    </li>
+
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class=''>
+                    <li class='{{ Request::is('users.index') ? 'active' : '' }}'>
                         <a class="nav-link"
-                            href="{{ route('doctors.index') }}">Doctors</a>
+                            href="{{ route('users.index') }}">
+                            <i class="fa-solid fa-user"></i>
+                            <span> Users</span></a>
+                    </li>
+                    <li class=''{{ Request::is('doctors.index') ? 'active' : '' }}''>
+                        <a class="nav-link"
+                            href="{{ route('doctors.index') }}">
+                            <i class="fa-solid fa-stethoscope"></i>
+                            <span>Doctors</span>
+                            </a>
+                    </li>
+                    <li class=''{{ Request::is('doctor-schedules.index') ? 'active' : '' }}''>
+                        <a class="nav-link"
+                            href="{{ route('doctor-schedules.index') }}">
+                            <i class="fa-solid fa-stethoscope"></i>
+                            <span>Doctors Schedule</span>
+                            </a>
                     </li>
                 </ul>
             </li>

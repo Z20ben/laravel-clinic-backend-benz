@@ -34,6 +34,8 @@ class DoctorController extends Controller
                 'doctor_specialist'=> 'required',
                 'photo' => 'image|mimes:jpeg,png,jpg,gif,svg',
                 'sip'=> 'required',
+                'id_ihs' => 'required',
+                'nik' => 'required',
             ]);
 
             $doctor = new Doctor();
@@ -48,7 +50,10 @@ class DoctorController extends Controller
             } else {
                 $doctor->photo = ""; // Atau apa pun yang Anda inginkan ketika tidak ada foto
             }
+            $doctor->address = $request->address;
             $doctor->sip = $request->sip;
+            $doctor->id_ihs=$request->id_ihs;
+            $doctor->nik=$request->nik;
             $doctor->save();
 
             // DB::table('doctors')->insert([
